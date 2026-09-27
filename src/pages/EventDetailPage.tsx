@@ -4,7 +4,7 @@ import { eventsApi } from "../api/events";
 import { bookingsApi } from "../api/bookings";
 import type { EventDetail } from "../types/event";
 import { CATEGORY_LABELS } from "../types/event";
-import { ApiError } from "../lib/api";
+import { ApiError, eventImageUrl } from "../lib/api";
 import { formatFullDateTime, handleImageError } from "../lib/format";
 import { useAuth } from "../context/AuthContext";
 import LoadingState from "../components/ui/LoadingState";
@@ -48,7 +48,7 @@ export default function EventDetailPage() {
     <div className="grid gap-8 md:grid-cols-3">
       <div className="md:col-span-2">
         <img
-          src={event.image}
+          src={eventImageUrl(event.image)}
           alt={event.name}
           onError={handleImageError}
           className="aspect-video w-full rounded-base border-2 border-border object-cover shadow-shadow"

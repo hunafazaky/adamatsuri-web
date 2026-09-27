@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import type { Event } from "../../types/event";
 import { CATEGORY_LABELS } from "../../types/event";
 import { formatDay, formatMonth, handleImageError } from "../../lib/format";
+import { eventImageUrl } from "../../lib/api";
 import { Badge } from "@/components/ui/badge";
 
 // The core visual idea for the whole app: an event card reads like a
@@ -31,7 +32,7 @@ export default function EventCard({ event }: { event: Event }) {
 
         {event.image && (
           <img
-            src={event.image}
+            src={eventImageUrl(event.image)}
             alt=""
             onError={handleImageError}
             className="aspect-[3/1] w-full rounded-base border-2 border-border object-cover"

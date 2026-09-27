@@ -3,8 +3,26 @@ import { trackRequest } from "./wakeUp";
 
 // Falls back to localhost:8080 for local dev against `docker compose up`.
 // Set VITE_API_BASE_URL in a .env file to point elsewhere (see .env.example).
-const BASE_URL =
+export const BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8080/api";
+
+// Some ISPs interfere with direct connections to ImageKit's CDN domain
+// (seen as ERR_SSL_VERSION_OR_CIPHER_MISMATCH that disappears over a
+// VPN — ISP-level DPI tampering, not an ImageKit outage). Routing
+// through our own backend (internal/handler/image_handler.go) sidesteps
+// it: the backend fetches the image server-side and streams it back
+// over a connection to OUR domain, which those ISPs have no reason to
+// touch. Only applied to ImageKit URLs — anything else (e.g. the
+// hero's external photos) loads directly, unaffected by this issue.
+export function eventImageUrl(url: string): string {
+  if (!url) return url;
+  try {
+    if (new URL(url).hostname !== "ik.imagekit.io") return url;
+  } catch {
+    return url;
+  }
+  return `${BASE_URL}/images/proxy?src=${encodeURIComponent(url)}`;
+}
 
 const TOKEN_KEY = "eventapp_token";
 

@@ -6,7 +6,7 @@ import EventForm, {
 } from "../components/events/EventForm";
 import type { EventDetail, Category } from "../types/event";
 import { toDatetimeLocalValue } from "../lib/format";
-import { ApiError } from "../lib/api";
+import { ApiError, eventImageUrl } from "../lib/api";
 import LoadingState from "../components/ui/LoadingState";
 
 export default function EditEventPage() {
@@ -56,7 +56,7 @@ export default function EditEventPage() {
       <div className="mt-6">
         <EventForm
           submitLabel="Save Changes"
-          initialImageUrl={event.image}
+          initialImageUrl={eventImageUrl(event.image)}
           initialValues={{
             name: event.name,
             description: event.description,
