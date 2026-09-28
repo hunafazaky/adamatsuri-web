@@ -4,7 +4,7 @@ import { eventsApi } from "../api/events";
 import type { Event } from "../types/event";
 import { CATEGORY_LABELS } from "../types/event";
 import { ApiError } from "../lib/api";
-import { formatFullDateTime } from "../lib/format";
+import { formatFullDateTime, isPastEvent } from "../lib/format";
 import LoadingState from "../components/ui/LoadingState";
 import EmptyState from "../components/ui/EmptyState";
 import { Badge } from "@/components/ui/badge";
@@ -92,7 +92,13 @@ export default function OrganizerDashboardPage() {
               <div>
                 <div className="flex items-center gap-2">
                   <h2 className="font-heading">{event.name}</h2>
-                  <Badge>{CATEGORY_LABELS[event.category]}</Badge>
+                  <Badge
+                    variant={
+                      isPastEvent(event.datetime) ? "warning" : "default"
+                    }
+                  >
+                    {CATEGORY_LABELS[event.category]}
+                  </Badge>
                 </div>
                 <p className="mt-1 text-sm font-base text-foreground/70">
                   {formatFullDateTime(event.datetime)}

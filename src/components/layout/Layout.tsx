@@ -42,7 +42,7 @@ export default function Layout() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="border-b-2 border-border bg-secondary-background">
+      <header className="sticky top-0 z-40 border-b-2 border-border bg-secondary-background">
         <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
           <Link to="/" className="font-heading text-lg">
             AdaMatsuri

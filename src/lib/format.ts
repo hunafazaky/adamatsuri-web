@@ -22,6 +22,12 @@ export function formatFullDateTime(iso: string): string {
   });
 }
 
+// True once an event's start time has passed — used to switch expired
+// events from the blue accent to the red warning color.
+export function isPastEvent(iso: string): boolean {
+  return new Date(iso).getTime() < Date.now();
+}
+
 // Converts an RFC3339 string (from the API) into the local-time value
 // an <input type="datetime-local"> expects ("YYYY-MM-DDTHH:mm") — used
 // to prefill the edit form. The reverse direction (form -> API) is

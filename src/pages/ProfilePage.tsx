@@ -110,7 +110,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="mx-auto max-w-md">
+    <div>
       <h1 className="font-heading text-2xl">Profile</h1>
 
       <Card className="mt-8">

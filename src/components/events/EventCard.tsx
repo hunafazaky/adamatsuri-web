@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
 import type { Event } from "../../types/event";
 import { CATEGORY_LABELS } from "../../types/event";
-import { formatDay, formatMonth, handleImageError } from "../../lib/format";
+import {
+  formatDay,
+  formatMonth,
+  handleImageError,
+  isPastEvent,
+} from "../../lib/format";
 import { eventImageUrl } from "../../lib/api";
 import { Badge } from "@/components/ui/badge";
 
@@ -10,16 +15,33 @@ import { Badge } from "@/components/ui/badge";
 // it separates the "stamped" date block from the event info, the same
 // way a physical ticket does.
 export default function EventCard({ event }: { event: Event }) {
+  const expired = isPastEvent(event.datetime);
+
   return (
     <Link
       to={`/events/${event.id}`}
-      className="flex overflow-hidden rounded-base border-2 border-border bg-secondary-background shadow-shadow transition hover:translate-x-[4px] hover:translate-y-[4px] hover:shadow-none"
+      className="flex overflow-hidden rounded-base border-2 border-border bg-secondary-background shadow-shadow transition hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
     >
-      <div className="flex w-24 flex-none flex-col items-center justify-center border-r-2 border-dashed border-border bg-main px-2 py-4 text-center">
-        <span className="font-heading text-2xl leading-none text-main-foreground">
+      <div
+        className={
+          "flex w-24 flex-none flex-col items-center justify-center border-r-2 border-dashed border-border px-2 py-4 text-center " +
+          (expired ? "bg-warning" : "bg-main")
+        }
+      >
+        <span
+          className={
+            "font-heading text-2xl leading-none " +
+            (expired ? "text-warning-foreground" : "text-main-foreground")
+          }
+        >
           {formatDay(event.datetime)}
         </span>
-        <span className="mt-1 text-xs font-heading text-main-foreground">
+        <span
+          className={
+            "mt-1 text-xs font-heading " +
+            (expired ? "text-warning-foreground" : "text-main-foreground")
+          }
+        >
           {formatMonth(event.datetime)}
         </span>
       </div>
@@ -27,7 +49,9 @@ export default function EventCard({ event }: { event: Event }) {
       <div className="flex flex-1 flex-col gap-2 p-4">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-heading">{event.name}</h3>
-          <Badge>{CATEGORY_LABELS[event.category]}</Badge>
+          <Badge variant={expired ? "warning" : "default"}>
+            {CATEGORY_LABELS[event.category]}
+          </Badge>
         </div>
 
         {event.image && (
@@ -35,7 +59,7 @@ export default function EventCard({ event }: { event: Event }) {
             src={eventImageUrl(event.image)}
             alt=""
             onError={handleImageError}
-            className="aspect-[3/1] w-full rounded-base border-2 border-border object-cover"
+            className="aspect-3/1 w-full rounded-base border-2 border-border object-cover"
           />
         )}
 

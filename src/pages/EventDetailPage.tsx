@@ -5,7 +5,11 @@ import { bookingsApi } from "../api/bookings";
 import type { EventDetail } from "../types/event";
 import { CATEGORY_LABELS } from "../types/event";
 import { ApiError, eventImageUrl } from "../lib/api";
-import { formatFullDateTime, handleImageError } from "../lib/format";
+import {
+  formatFullDateTime,
+  handleImageError,
+  isPastEvent,
+} from "../lib/format";
 import { useAuth } from "../context/AuthContext";
 import LoadingState from "../components/ui/LoadingState";
 import { Badge } from "@/components/ui/badge";
@@ -55,7 +59,9 @@ export default function EventDetailPage() {
         />
 
         <div className="mt-4 flex items-center gap-2">
-          <Badge>{CATEGORY_LABELS[event.category]}</Badge>
+          <Badge variant={isPastEvent(event.datetime) ? "warning" : "default"}>
+            {CATEGORY_LABELS[event.category]}
+          </Badge>
           <span className="text-sm font-base text-foreground/70">
             {event.attendee_count}{" "}
             {event.attendee_count === 1 ? "person" : "people"} going

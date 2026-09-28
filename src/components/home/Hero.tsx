@@ -48,17 +48,17 @@ export default function Hero() {
         {/* Darker wash than a flat-illustration background would
             need — real photos are busier, so text needs more
             contrast to stay legible on top. */}
-        <div className="absolute inset-0 bg-white/70" />
+        <div className="absolute inset-0 bg-foreground/40" />
       </div>
 
       <div className="relative px-6 py-12 sm:px-10 sm:py-16">
         <p className="inline-block rounded-base border-2 border-border bg-secondary-background px-3 py-1 text-sm font-heading">
           For the anime community
         </p>
-        <h1 className="mt-4 max-w-2xl font-heading text-4xl leading-tight sm:text-5xl">
+        <h1 className="mt-4 max-w-2xl font-heading text-background text-4xl leading-tight sm:text-5xl">
           Find your next convention, market, or meetup.
         </h1>
-        <p className="mt-4 max-w-md font-base text-foreground/80">
+        <p className="mt-4 max-w-md font-base text-background/80">
           Conventions, doujin markets, screenings, cosplay contests, and game
           tournaments — posted by the community, for the community. Browse
           what's coming up, or start hosting your own.

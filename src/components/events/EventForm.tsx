@@ -150,7 +150,7 @@ export default function EventForm({
 
       <div>
         <Label>Category</Label>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <div className="mt-2 flex gap-2 overflow-x-auto pb-1 whitespace-nowrap">
           {CATEGORIES.map((c) => (
             <Button
               key={c}
