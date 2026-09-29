@@ -97,10 +97,11 @@ export default function HomePage() {
           placeholder="Search events by name or description"
         />
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-nowrap gap-2 overflow-x-auto whitespace-nowrap px-1 pt-1 pb-2 -mx-1">
           <Button
             variant={category === "" ? "default" : "neutral"}
             size="sm"
+            className="shrink-0"
             onClick={() => handleCategoryChange("")}
           >
             All categories
@@ -110,6 +111,7 @@ export default function HomePage() {
               key={c}
               variant={category === c ? "default" : "neutral"}
               size="sm"
+              className="shrink-0"
               onClick={() => handleCategoryChange(c)}
             >
               {CATEGORY_LABELS[c]}
@@ -118,9 +120,13 @@ export default function HomePage() {
         </div>
 
         {availableTags.length > 0 && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-nowrap gap-2 overflow-x-auto whitespace-nowrap px-1 pt-1 pb-2 -mx-1">
             {availableTags.map((t) => (
-              <button key={t.id} onClick={() => handleTagChange(t.name)}>
+              <button
+                key={t.id}
+                onClick={() => handleTagChange(t.name)}
+                className="shrink-0"
+              >
                 <Badge
                   variant="tag"
                   className={
